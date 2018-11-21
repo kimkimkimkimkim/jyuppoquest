@@ -11,6 +11,7 @@ public class HeroCollider : MonoBehaviour {
 			"foot", int 残りの歩数
 			"hp", int HP
 			"attack", int 攻撃力
+			"turn", int 
 		}
 	 */
 
