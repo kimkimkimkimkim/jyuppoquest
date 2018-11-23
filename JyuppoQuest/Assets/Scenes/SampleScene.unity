@@ -4150,7 +4150,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1100611431}
-  - component: {fileID: 1100611432}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -4196,47 +4195,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1100611432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1100611430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65a706124a9834c4ca2fc4a6d758c47c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mapObj1:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  mapObj2:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  mapObj3:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  mapObj4:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  mapObj5:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &1103084569
 GameObject:
   m_ObjectHideFlags: 0
@@ -6500,6 +6458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65a706124a9834c4ca2fc4a6d758c47c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hero: {fileID: 1907968583}
   mapObj1:
   - {fileID: 1915993131636654, guid: 864e931b47e694bcdae22d45953fe7ce, type: 2}
   - {fileID: 1277525019796312, guid: b8d5dfaf6cf1c446aabbc5840225be69, type: 2}
@@ -7621,6 +7580,11 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1878371985}
   m_Mesh: {fileID: 4300262, guid: 73f90bdd5e7539740a292cdd00817d1a, type: 3}
+--- !u!1 &1907968583 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1278074445101110, guid: 1f9fea56250224b73af3ff0455e69888,
+    type: 2}
+  m_PrefabInternal: {fileID: 2021667565}
 --- !u!1 &1971958909
 GameObject:
   m_ObjectHideFlags: 0

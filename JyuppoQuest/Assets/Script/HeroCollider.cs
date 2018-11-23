@@ -34,10 +34,17 @@ public class HeroCollider : MonoBehaviour {
 			//textHealth.GetComponent<Text>().text = health.ToString();
 			//PlayerPrefs.SetInt("hp",health);
 
+			string id = col.GetComponent<ItemID>().id;
+			PlayerPrefs.SetInt(id,0);
+			
 			//画面遷移
 			FadeManager.Instance.LoadScene ("BattleScene", 2.0f);
 		}
 		if(col.CompareTag("ItemRed")){
+
+			string id = col.GetComponent<ItemID>().id;
+			PlayerPrefs.SetInt(id,0);
+
 			Destroy(col.gameObject);
 			int plus = 5;
 			int attack = PlayerPrefs.GetInt("attack") + plus;
@@ -54,6 +61,10 @@ public class HeroCollider : MonoBehaviour {
 			}));
 		}
 		if(col.CompareTag("ItemBlue")){
+
+			string id = col.GetComponent<ItemID>().id;
+			PlayerPrefs.SetInt(id,0);
+			
 			Destroy(col.gameObject);
 			int plus = 5;
 			int attack = PlayerPrefs.GetInt("attack") - plus;

@@ -269,6 +269,7 @@ public class SelectCommand : MonoBehaviour {
 	public void HeroHeal(int attack){
 		int hp = int.Parse(textHpHero.GetComponent<Text>().text);
 		hp += attack;
+		if(hp > PlayerPrefs.GetInt("hp"))hp = PlayerPrefs.GetInt("hp");
 		if(hp < 0)hp = 0;
 		PlayerPrefs.SetInt("isAnimation",1);
 		effectHero.transform.GetChild(2).gameObject.SetActive(true);
@@ -331,6 +332,7 @@ public class SelectCommand : MonoBehaviour {
 	public void EnemyHeal(int attack){
 		int hp = int.Parse(textHpEnemy.GetComponent<Text>().text);
 		hp += attack;
+		if(hp > PlayerPrefs.GetInt("enemyhp"))hp = PlayerPrefs.GetInt("enemyhp");
 		if(hp < 0)hp = 0;
 		PlayerPrefs.SetInt("isAnimation",1);
 		effectEnemy.transform.GetChild(2).gameObject.SetActive(true);

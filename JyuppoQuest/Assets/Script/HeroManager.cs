@@ -28,24 +28,28 @@ public class HeroManager : MonoBehaviour {
 		//右
 		if(Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)){
 			isMove = true;
+			PlayerPrefs.SetInt("posx",PlayerPrefs.GetInt("posx") + 2);
 			//回転
 			targetPos = new Vector3(transform.position.x + disMove,transform.position.y, transform.position.z);
 		}
 		//左
 		if(Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)){
 			isMove = true;
+			PlayerPrefs.SetInt("posx",PlayerPrefs.GetInt("posx") - 2);
 			//回転
 			targetPos = new Vector3(transform.position.x - disMove,transform.position.y, transform.position.z);
 		}
 		//上
 		if(Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)){
 			isMove = true;
+			PlayerPrefs.SetInt("posz",PlayerPrefs.GetInt("posz") + 2);
 			//回転
 			targetPos = new Vector3(transform.position.x,transform.position.y, transform.position.z + disMove);
 		}
 		//下
 		if(Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)){
 			isMove = true;
+			PlayerPrefs.SetInt("posz",PlayerPrefs.GetInt("posz") - 2);
 			//回転
 			targetPos = new Vector3(transform.position.x,transform.position.y, transform.position.z - disMove);
 		}

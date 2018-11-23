@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System;
  
 public class Message : MonoBehaviour {
 
@@ -145,6 +146,10 @@ public class Message : MonoBehaviour {
 						nowTextNum = 0;
 						isEndMessage = true;
 						SetMessagePanel("戦いに勝利した！\nステータスが上昇したぞ");
+						StartCoroutine(DelayMethod(1.0f, () =>
+						{
+							FadeManager.Instance.LoadScene ("SampleScene", 2.0f);
+						}));
 					}else if(int.Parse(textHpHero.GetComponent<Text>().text) == 0){
 						textWinLose.SetActive(true);
 						textWinLose.GetComponent<Text>().color = Color.blue;
@@ -153,6 +158,10 @@ public class Message : MonoBehaviour {
 						nowTextNum = 0;
 						isEndMessage = true;
 						SetMessagePanel("負けてしまった...");
+						StartCoroutine(DelayMethod(1.0f, () =>
+						{
+							FadeManager.Instance.LoadScene ("SampleScene", 2.0f);
+						}));
 					}else{
 						
 						//攻撃選択に進む
@@ -166,75 +175,7 @@ public class Message : MonoBehaviour {
 						explainArea.SetActive(true);
 						PlayerPrefs.SetInt("isBattle",1);
 						//それ以外はテキスト処理関連を初期化して次の文字から表示させる
-					}/*else{
-						//敵の攻撃に入る
-						nowTextNum = 0;
-						isEndMessage = true;
-						PlayerPrefs.SetInt("isHeroTurn",0);
-						PlayerPrefs.SetInt("enemycommand",UnityEngine.Random.Range(0,4));
-
-						//行動
-						int hero = PlayerPrefs.GetInt("herocommand");
-						int enemy = PlayerPrefs.GetInt("enemycommand");
-
-						int heroAttack = PlayerPrefs.GetInt("attack");
-						int enemyAttack = PlayerPrefs.GetInt("enemyattack");
-
-						commandArea.SetActive(false);
-						explainArea.SetActive(false);
-
-						if(enemy == 0){
-							//攻撃
-							if(hero == 0){
-								//ヒーローが攻撃していた時
-								attackArea.GetComponent<SelectCommand>().EnemyAttack((int)enemyAttack);
-								SetMessagePanel(
-								"敵の攻撃！\n"
-								+"\n"
-								+"\n"
-								+"く。いいダメージだ。");
-							}else if(hero == 1){
-								//ヒーローが防御していた時
-								attackArea.GetComponent<SelectCommand>().EnemyAttack((int)enemyAttack/2);
-								SetMessagePanel(
-								"敵の攻撃！\n"
-								+"\n"
-								+"\n"
-								+"防御していたので、敵の攻撃を防いだ。");
-							}else if(hero == 2){
-								//ヒーローが回復していた時
-								attackArea.GetComponent<SelectCommand>().EnemyAttack((int)enemyAttack*2);
-								SetMessagePanel(
-								"敵の攻撃！\n"
-								+"\n"
-								+"\n"
-								+"回復している隙に攻撃された。\nより多くのダメージを食らった。");
-							}
-						}else if(enemy == 1){
-							//防御
-							attackArea.GetComponent<SelectCommand>().EnemyDefense();
-							SetMessagePanel(
-							"敵の防御！\n"
-							+"\n"
-							+"\n"
-							+"次の攻撃のダメージを抑えられてしまう。");
-						}else if(enemy == 2){
-							//回復
-							attackArea.GetComponent<SelectCommand>().EnemyHeal(enemyAttack);
-							SetMessagePanel(
-							"敵の回復！\n"
-							+"\n"
-							+"\n"
-							+"回復している隙がチャンスだ！");
-						}else if(enemy == 3){
-							//休憩
-							SetMessagePanel(
-							"敵の休憩！\n"
-							+"\n"
-							+"\n"
-							+"敵がボーッとしている！");
-						}		
-					}*/
+					}
 				}
 			}
 		}
@@ -250,5 +191,11 @@ public class Message : MonoBehaviour {
 		transform.Find("Panel").GetChild(0).gameObject.SetActive (true);
 		transform.Find("Panel").GetChild(1).gameObject.SetActive (true);
 		isEndMessage = false;
+	}
+
+	private IEnumerator DelayMethod(float waitTime, Action action)
+	{
+		yield return new WaitForSeconds(waitTime);
+		action();
 	}
 }

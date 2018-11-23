@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FieldCreate : MonoBehaviour {
 
+	public GameObject hero;
+
 	public GameObject[] mapObj1 = new GameObject[5];
 	public GameObject[] mapObj2 = new GameObject[5];
 	public GameObject[] mapObj3 = new GameObject[5];
@@ -14,6 +16,23 @@ public class FieldCreate : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		if(PlayerPrefs.GetInt("First",0) == 0){
+			for(int i=0;i<1;i++){
+				for(int j=0;j<5;j++){
+					for(int k=0;k<5;k++){
+						string pos = (i+1).ToString() + j.ToString() + k.ToString();
+						PlayerPrefs.SetInt(pos,1);
+					}
+				}
+			}
+			PlayerPrefs.SetInt("posx",4);
+			PlayerPrefs.SetInt("posz",4);
+
+		}
+
+		PlayerPrefs.SetInt("First",1);
+		hero.transform.localPosition = new Vector3(PlayerPrefs.GetInt("posx"),1,PlayerPrefs.GetInt("posz"));
+
 		for(int i=0;i<5;i++){
 			for(int j=0;j<5;j++){
 				mapPos[i,j] = new Vector3(j*2,0,8 - 2*i);
@@ -39,7 +58,10 @@ public class FieldCreate : MonoBehaviour {
 					break;
 				}
 				if(mapObj[j] != null){
+					string id = "1" + i.ToString() + j.ToString();
+					if(PlayerPrefs.GetInt(id) == 0)continue;
 					GameObject obj = (GameObject)Instantiate(mapObj[j]);
+					obj.GetComponent<ItemID>().id = id;
 					obj.transform.SetParent(this.transform,false);
 					obj.transform.localPosition = mapPos[i,j];
 				}

@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33563867447294896}
   - component: {fileID: 23667631595083954}
   - component: {fileID: 65865378199137066}
+  - component: {fileID: 114260700386255078}
   m_Layer: 0
   m_Name: ManaPot
   m_TagString: ItemBlue
@@ -98,3 +99,14 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.14560783, y: 0.22597899, z: 0.14560781}
   m_Center: {x: 0.000000011175871, y: 0.05923731, z: 0}
+--- !u!114 &114260700386255078
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1277525019796312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22befe2dcd65d4928a1ea799b6d75c6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
