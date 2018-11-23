@@ -19,16 +19,6 @@ public class EnemyManager : MonoBehaviour {
 	void Start () {
 		PlayerPrefs.SetInt("enemyhp",50);
 		PlayerPrefs.SetInt("enemyattack",5);
-		PlayerPrefs.SetInt("enemy1",0);
-		PlayerPrefs.SetInt("enemy2",4);
-		PlayerPrefs.SetInt("enemy3",0);
-		PlayerPrefs.SetInt("enemy4",4);
-		PlayerPrefs.SetInt("enemy5",0);
-		PlayerPrefs.SetInt("enemy6",4);
-		PlayerPrefs.SetInt("enemy7",0);
-		PlayerPrefs.SetInt("enemy8",4);
-		PlayerPrefs.SetInt("enemy9",0);
-		PlayerPrefs.SetInt("enemy10",4);
 
 		textHP.transform.GetChild(0).gameObject.GetComponent<Text>().text 
 			= PlayerPrefs.GetInt("enemyhp").ToString();

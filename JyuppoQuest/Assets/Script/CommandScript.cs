@@ -39,7 +39,7 @@ public class CommandScript : MonoBehaviour {
 			if(turn != 10)return;
 			//攻撃
 			Debug.Log("攻撃");
-			battleManager.GetComponent<BattleManager>().BattleStart();
+			//battleManager.GetComponent<BattleManager>().BattleStart();
 		}
 
 	}

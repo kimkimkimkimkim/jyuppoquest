@@ -37,13 +37,13 @@ public class HeroManager : MonoBehaviour {
 			//回転
 			targetPos = new Vector3(transform.position.x - disMove,transform.position.y, transform.position.z);
 		}
-		//右
+		//上
 		if(Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)){
 			isMove = true;
 			//回転
 			targetPos = new Vector3(transform.position.x,transform.position.y, transform.position.z + disMove);
 		}
-		//右
+		//下
 		if(Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)){
 			isMove = true;
 			//回転
