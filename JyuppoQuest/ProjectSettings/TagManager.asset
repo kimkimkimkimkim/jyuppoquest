@@ -7,6 +7,8 @@ TagManager:
   - Enemy01
   - ItemRed
   - ItemBlue
+  - Warp
+  - Chest
   layers:
   - Default
   - TransparentFX

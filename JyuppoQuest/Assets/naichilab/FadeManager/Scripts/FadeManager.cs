@@ -107,6 +107,7 @@ public class FadeManager : MonoBehaviour
 	/// <param name='interval'>暗転にかかる時間(秒)</param>
 	public void LoadScene (string scene, float interval)
 	{
+		PlayerPrefs.SetInt("canMove",0);
 		StartCoroutine (TransScene (scene, interval));
 	}
 

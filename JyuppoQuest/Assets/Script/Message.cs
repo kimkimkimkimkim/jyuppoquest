@@ -139,6 +139,9 @@ public class Message : MonoBehaviour {
 				if(nowTextNum >= message.Length) {
 					
 					if(int.Parse(textHpEnemy.GetComponent<Text>().text) == 0){
+						RemainAudio.Instance.Stop();
+						RemainAudio.Instance.PlaySE("win");
+						PlayerPrefs.SetInt("isAnimation",1);
 						textWinLose.SetActive(true);
 						textWinLose.GetComponent<Text>().color = Color.red;
 						textWinLose.GetComponent<Text>().text = "WIN";
@@ -146,21 +149,42 @@ public class Message : MonoBehaviour {
 						nowTextNum = 0;
 						isEndMessage = true;
 						SetMessagePanel("戦いに勝利した！\nステータスが上昇したぞ");
-						StartCoroutine(DelayMethod(1.0f, () =>
-						{
-							FadeManager.Instance.LoadScene ("SampleScene", 2.0f);
+						StartCoroutine(DelayMethod(3.0f, () =>
+						{	
+							RemainAudio.Instance.Play();
+							RemainAudio.Instance.ChangeBgm(0);
+							int nowStage = PlayerPrefs.GetInt("nowStage");
+							FadeManager.Instance.LoadScene ("Stage" + nowStage.ToString(), 2.0f);
+							//ステータス上昇
+							Debug.Log("hp上昇値:" + PlayerPrefs.GetInt("uphp"));
+							Debug.Log("attack上昇値:" + PlayerPrefs.GetInt("upattack"));
+							int hp = PlayerPrefs.GetInt("hp") + PlayerPrefs.GetInt("uphp");
+							int attack = PlayerPrefs.GetInt("attack") + PlayerPrefs.GetInt("upattack");
+							PlayerPrefs.SetInt("hp",hp);
+							PlayerPrefs.SetInt("attack",attack);
 						}));
 					}else if(int.Parse(textHpHero.GetComponent<Text>().text) == 0){
+						RemainAudio.Instance.Stop();
+						RemainAudio.Instance.PlaySE("lose");
+						PlayerPrefs.SetInt("isAnimation",1);
 						textWinLose.SetActive(true);
 						textWinLose.GetComponent<Text>().color = Color.blue;
 						textWinLose.GetComponent<Text>().text = "LOSE";
 						iTween.MoveFrom(textWinLose, iTween.Hash("x",-10));
 						nowTextNum = 0;
 						isEndMessage = true;
-						SetMessagePanel("負けてしまった...");
-						StartCoroutine(DelayMethod(1.0f, () =>
+						SetMessagePanel("負けてしまった...\n少しだけステータスが上昇");
+						StartCoroutine(DelayMethod(3.0f, () =>
 						{
-							FadeManager.Instance.LoadScene ("SampleScene", 2.0f);
+							RemainAudio.Instance.Play();
+							RemainAudio.Instance.ChangeBgm(0);
+							int nowStage = PlayerPrefs.GetInt("nowStage");
+							FadeManager.Instance.LoadScene ("Stage" + nowStage.ToString(), 2.0f);
+							//ステータス上昇
+							int hp = PlayerPrefs.GetInt("hp") + (int)PlayerPrefs.GetInt("uphp")/10;
+							int attack = PlayerPrefs.GetInt("attack") + (int)PlayerPrefs.GetInt("upattack")/10;
+							PlayerPrefs.SetInt("hp",hp);
+							PlayerPrefs.SetInt("attack",attack);
 						}));
 					}else{
 						

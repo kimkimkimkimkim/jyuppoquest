@@ -534,6 +534,7 @@ GameObject:
   - component: {fileID: 95423519968175110}
   - component: {fileID: 65614850246529084}
   - component: {fileID: 114531919549947244}
+  - component: {fileID: 114022717287895548}
   m_Layer: 0
   m_Name: Impling
   m_TagString: Enemy01
@@ -1237,6 +1238,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114022717287895548
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1836650453336870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30869f7245d3744d6891fe7a5a0049b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 0
+  attack: 0
 --- !u!114 &114531919549947244
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1248,6 +1262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22befe2dcd65d4928a1ea799b6d75c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 
 --- !u!137 &137180674902829164
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

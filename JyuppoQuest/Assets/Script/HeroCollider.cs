@@ -20,6 +20,12 @@ public class HeroCollider : MonoBehaviour {
 	public GameObject textAttack;
 
 	public GameObject fadeManager;
+
+	private GameObject remainAudio;
+
+	private void Start(){
+
+	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -29,18 +35,32 @@ public class HeroCollider : MonoBehaviour {
 	void OnTriggerEnter(Collider col)
     {	
         if(col.CompareTag("Enemy01")){
-			//Destroy(col.gameObject);
-			//int health = PlayerPrefs.GetInt("hp") - 20;
-			//textHealth.GetComponent<Text>().text = health.ToString();
-			//PlayerPrefs.SetInt("hp",health);
 
 			string id = col.GetComponent<ItemID>().id;
 			PlayerPrefs.SetInt(id,0);
+
+			int hp = col.GetComponent<ItemStatus>().hp;
+			int attack = col.GetComponent<ItemStatus>().attack;
+			int uphp = col.GetComponent<ItemStatus>().uphp;
+			int upattack = col.GetComponent<ItemStatus>().upattack;
+
+			PlayerPrefs.SetInt("enemyhp",hp);
+			PlayerPrefs.SetInt("enemyattack",attack);
+			PlayerPrefs.SetInt("uphp",uphp);
+			PlayerPrefs.SetInt("upattack",upattack);
 			
-			//画面遷移
+			PlayerPrefs.SetInt("isScreenChange",1);
 			FadeManager.Instance.LoadScene ("BattleScene", 2.0f);
+
+			StartCoroutine(DelayMethod(1.0f, () => {
+				//画面遷移
+				RemainAudio.Instance.ChangeBgm(1);
+			}));
+			
 		}
 		if(col.CompareTag("ItemRed")){
+
+			RemainAudio.Instance.PlaySE("item");
 
 			string id = col.GetComponent<ItemID>().id;
 			PlayerPrefs.SetInt(id,0);
@@ -80,6 +100,58 @@ public class HeroCollider : MonoBehaviour {
 				textAnim.SetActive(false);
 			}));
 		}
+
+		if(col.CompareTag("Warp")){
+
+			RemainAudio.Instance.PlaySE("warp");
+
+			string id = col.GetComponent<ItemID>().id;
+			PlayerPrefs.SetInt(id,0);
+
+			string target = "Stage" + col.GetComponent<WarpManager>().target.ToString();
+			PlayerPrefs.SetInt("nowStage",col.GetComponent<WarpManager>().target);
+
+			PlayerPrefs.SetInt("isScreenChange",1);
+			//画面遷移
+			FadeManager.Instance.LoadScene (target, 2.0f);
+			
+			Destroy(col.gameObject);
+		}
+
+		if(col.CompareTag("Chest")){
+
+			RemainAudio.Instance.PlaySE("item");
+
+			string id = col.GetComponent<ItemID>().id;
+			PlayerPrefs.SetInt(id,0);
+			
+			Destroy(col.gameObject);
+			int plusH = col.GetComponent<ItemStatus>().hp;
+			int plusA = col.GetComponent<ItemStatus>().attack;
+			int attack = PlayerPrefs.GetInt("attack") + plusA;
+			int health = PlayerPrefs.GetInt("hp") + plusH;
+			textAttack.GetComponent<Text>().text = attack.ToString();
+			textHealth.GetComponent<Text>().text = health.ToString();
+
+			PlayerPrefs.SetInt("attack",attack);
+			PlayerPrefs.SetInt("hp",health);
+
+			GameObject textAnim = textAttack.transform.GetChild(0).gameObject;
+			textAnim.SetActive(true);
+			textAnim.GetComponent<Text>().color = Color.red;
+			textAnim.GetComponent<Text>().text = "+" + plusA.ToString() + "↑";
+
+			GameObject textAnimH = textHealth.transform.GetChild(0).gameObject;
+			textAnimH.SetActive(true);
+			textAnimH.GetComponent<Text>().color = Color.red;
+			textAnimH.GetComponent<Text>().text = "+" + plusH.ToString() + "↑";
+			StartCoroutine(DelayMethod(1.5f, () =>
+			{
+				textAnim.SetActive(false);
+				textAnimH.SetActive(false);
+			}));
+		}
+
     }
 
 	private IEnumerator DelayMethod(float waitTime, Action action)

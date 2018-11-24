@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class HeroManager : MonoBehaviour {
 
@@ -15,12 +16,12 @@ public class HeroManager : MonoBehaviour {
 	private float disMove = 2f; //移動距離
 
 	private void Start(){
-		PlayerPrefs.SetInt("foot",10);
-		PlayerPrefs.SetInt("hp",100);
-		PlayerPrefs.SetInt("attack",10);
+
 	}
 
 	void Update () {
+		if(PlayerPrefs.GetInt("foot") == 0) return;
+		if(PlayerPrefs.GetInt("canMove") == 0)return;
 		if(state == "move")return; //もし移動中だったら入力を受け付けない
 		
 		Vector3 targetPos = new Vector3(0,0,0);
@@ -55,6 +56,8 @@ public class HeroManager : MonoBehaviour {
 		}
 
 		if(isMove){
+			RemainAudio.Instance.PlaySE("foot");
+			
 			int foot = PlayerPrefs.GetInt("foot") - 1;
 			textFoot.GetComponent<Text>().text = foot.ToString();
 			PlayerPrefs.SetInt("foot",foot);
@@ -69,24 +72,38 @@ public class HeroManager : MonoBehaviour {
 			Quaternion rotation = Quaternion.LookRotation(relativePos);
 			transform.rotation = rotation;
 
-			//移動
 			iTween.MoveTo(gameObject, iTween.Hash("x",targetPos.x,"z",targetPos.z,"time",timeMove,
-				"EaseType",iTween.EaseType.linear));
+				"EaseType",iTween.EaseType.linear,"oncomplete","CompleteMove","oncompletetarget",gameObject));
+			
 
 		}
 		
 	}
 
-	private void UpdatePos(){
-
+	private void CompleteMove(){
+		if(PlayerPrefs.GetInt("isScreenChange") == 0 && PlayerPrefs.GetInt("foot") == 0){
+			StartCoroutine(DelayMethod(1.5f, () =>
+			{
+				//ボス戦
+				FadeManager.Instance.LoadScene ("BossBattleScene", 2.0f);
+				RemainAudio.Instance.ChangeBgm(2);
+			}));
+		}
 	}
 
 	private void Stop(){
 		state = "stop";
+		if(PlayerPrefs.GetInt("isScreenChange") == 1)state = "move";
 		GetComponent<Animator> ().SetBool ("isWalk",false);
 		if(PlayerPrefs.GetInt("foot") == 0){
 			//ボス戦突入
 
 		}
+	}
+
+	private IEnumerator DelayMethod(float waitTime, Action action)
+	{
+		yield return new WaitForSeconds(waitTime);
+		action();
 	}
 }

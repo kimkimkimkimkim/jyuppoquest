@@ -131,6 +131,7 @@ public class SelectCommand : MonoBehaviour {
 				+"お互いダメージを食らった。");
 			}else if(enemy == 1){
 				//相手が防御していた時
+				EnemyDefense();
 				EnemyAttack((int)(enemyAttack*1.5f));
 				message.GetComponent<Message>().SetMessagePanel(
 				"勇者の攻撃！\n"
@@ -158,6 +159,7 @@ public class SelectCommand : MonoBehaviour {
 			//防御
 			if(enemy == 0){
 				//相手が攻撃していた時
+				HeroDefense();
 				HeroAttack((int)(heroAttack*1.5f));
 				message.GetComponent<Message>().SetMessagePanel(
 				"勇者のカウンター！\n"
@@ -230,13 +232,16 @@ public class SelectCommand : MonoBehaviour {
 	}
 
 	public void HeroAttack(int attack){
+		
 		int hp = int.Parse(textHpEnemy.GetComponent<Text>().text);
 		hp -= attack;
 		if(hp < 0)hp = 0;
 		PlayerPrefs.SetInt("isAnimation",1);
 		effectEnemy.transform.GetChild(0).gameObject.SetActive(true);
+		
 
 		StartCoroutine(DelayMethod(1.0f, () => {
+			RemainAudio.Instance.PlaySE("attack");
 			iTween.ValueTo(sliderEnemy,iTween.Hash("from",int.Parse(textHpEnemy.GetComponent<Text>().text)
 				,"to",hp,"onupdate","UpdateSliderEnemy","onupdatetarget",gameObject));
 			textHpEnemy.GetComponent<Text>().text = hp.ToString();
@@ -258,6 +263,7 @@ public class SelectCommand : MonoBehaviour {
 		effectHero.transform.GetChild(1).gameObject.SetActive(true);
 
 		StartCoroutine(DelayMethod(1.0f, () => {
+			RemainAudio.Instance.PlaySE("defense");
 			StartCoroutine(DelayMethod(2.0f, () =>
 			{
 				effectHero.transform.GetChild(1).gameObject.SetActive(false);
@@ -275,6 +281,7 @@ public class SelectCommand : MonoBehaviour {
 		effectHero.transform.GetChild(2).gameObject.SetActive(true);
 
 		StartCoroutine(DelayMethod(1.0f, () => {
+			RemainAudio.Instance.PlaySE("heal");
 			iTween.ValueTo(sliderHero,iTween.Hash("from",int.Parse(textHpHero.GetComponent<Text>().text)
 				,"to",hp,"onupdate","UpdateSliderHero","onupdatetarget",gameObject));
 			textHpHero.GetComponent<Text>().text = hp.ToString();
@@ -300,6 +307,7 @@ public class SelectCommand : MonoBehaviour {
 		effectHero.transform.GetChild(0).gameObject.SetActive(true);
 
 		StartCoroutine(DelayMethod(1.0f, () => {
+			RemainAudio.Instance.PlaySE("attack");
 			iTween.ValueTo(sliderHero,iTween.Hash("from",int.Parse(textHpHero.GetComponent<Text>().text)
 				,"to",hp,"onupdate","UpdateSliderHero","onupdatetarget",gameObject));
 			textHpHero.GetComponent<Text>().text = hp.ToString();
@@ -321,6 +329,7 @@ public class SelectCommand : MonoBehaviour {
 		effectEnemy.transform.GetChild(1).gameObject.SetActive(true);
 
 		StartCoroutine(DelayMethod(1.0f, () => {
+			RemainAudio.Instance.PlaySE("defense");
 			StartCoroutine(DelayMethod(2.0f, () =>
 			{
 				effectEnemy.transform.GetChild(1).gameObject.SetActive(false);
@@ -338,6 +347,7 @@ public class SelectCommand : MonoBehaviour {
 		effectEnemy.transform.GetChild(2).gameObject.SetActive(true);
 
 		StartCoroutine(DelayMethod(1.0f, () => {
+			RemainAudio.Instance.PlaySE("heal");
 			iTween.ValueTo(sliderEnemy,iTween.Hash("from",int.Parse(textHpEnemy.GetComponent<Text>().text)
 				,"to",hp,"onupdate","UpdateSliderEnemy","onupdatetarget",gameObject));
 			textHpEnemy.GetComponent<Text>().text = hp.ToString();
