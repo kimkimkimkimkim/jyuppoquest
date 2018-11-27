@@ -56,7 +56,7 @@ public class MessageBoss : MonoBehaviour {
 		clickIcon.enabled = false;
 		messageText = GetComponentInChildren<Text>();
 		messageText.text = "";
-		SetMessage("敵が現れた！\n");
+		SetMessage("このゲームの支配者が現れた。\n");
 	}
  
 	void Update () {
@@ -142,8 +142,9 @@ public class MessageBoss : MonoBehaviour {
 				if(nowTextNum >= message.Length) {
 					
 					if(int.Parse(textHpEnemy.GetComponent<Text>().text) == 0){
+						PlayerPrefs.SetInt("questcomplete",1);
 						RemainAudio.Instance.Stop();
-						RemainAudio.Instance.PlaySE("win");
+						RemainAudio.Instance.PlaySE("bosswin");
 						PlayerPrefs.SetInt("isAnimation",1);
 						textWinLose.SetActive(true);
 						textWinLose.GetComponent<Text>().color = Color.red;
@@ -151,27 +152,20 @@ public class MessageBoss : MonoBehaviour {
 						iTween.MoveFrom(textWinLose, iTween.Hash("x",-10));
 						nowTextNum = 0;
 						isEndMessage = true;
-						SetMessagePanel("戦いに勝利した！\n");
+						SetMessagePanel("支配者に勝利し、世界の平和は守られた！ ...fin\n");
 						boss.GetComponent<Animator>().SetTrigger("dieTrigger");
-						StartCoroutine(DelayMethod(3.0f, () =>
+						StartCoroutine(DelayMethod(5.0f, () =>
 						{	
-							RemainAudio.Instance.Play();
-							//RemainAudio.Instance.ChangeBgm(0);
-							/* 
-							int nowStage = PlayerPrefs.GetInt("nowStage");
-							FadeManager.Instance.LoadScene ("Stage" + nowStage.ToString(), 2.0f);
-							//ステータス上昇
-							Debug.Log("hp上昇値:" + PlayerPrefs.GetInt("uphp"));
-							Debug.Log("attack上昇値:" + PlayerPrefs.GetInt("upattack"));
-							int hp = PlayerPrefs.GetInt("hp") + PlayerPrefs.GetInt("uphp");
-							int attack = PlayerPrefs.GetInt("attack") + PlayerPrefs.GetInt("upattack");
-							PlayerPrefs.SetInt("hp",hp);
-							PlayerPrefs.SetInt("attack",attack);
-							*/
+							naichilab.UnityRoomTweet.TweetWithImage ("jyuppo-quest", "ラスボスを倒した！次の勇者は君だ！", "unityroom", "unity1week");
+							textWinLose.transform.GetChild(0).gameObject.SetActive(true);
+							textWinLose.transform.GetChild(1).gameObject.SetActive(true);
+							iTween.MoveFrom(textWinLose.transform.GetChild(0).gameObject, iTween.Hash("x",-10));
+							iTween.MoveFrom(textWinLose.transform.GetChild(1).gameObject, iTween.Hash("x",-10));
 						}));
 					}else if(int.Parse(textHpHero.GetComponent<Text>().text) == 0){
+						PlayerPrefs.SetInt("questcomplete",0);
 						RemainAudio.Instance.Stop();
-						RemainAudio.Instance.PlaySE("lose");
+						RemainAudio.Instance.PlaySE("bosslose");
 						PlayerPrefs.SetInt("isAnimation",1);
 						textWinLose.SetActive(true);
 						textWinLose.GetComponent<Text>().color = Color.blue;
@@ -179,20 +173,14 @@ public class MessageBoss : MonoBehaviour {
 						iTween.MoveFrom(textWinLose, iTween.Hash("x",-10));
 						nowTextNum = 0;
 						isEndMessage = true;
-						SetMessagePanel("負けてしまった...\n");
-						StartCoroutine(DelayMethod(3.0f, () =>
+						SetMessagePanel("勇者は死んでしまった。 to be continued...\n");
+						StartCoroutine(DelayMethod(1.0f, () =>
 						{
-							RemainAudio.Instance.Play();
-							//RemainAudio.Instance.ChangeBgm(0);
-							FadeManager.Instance.LoadScene("TitleScene",2.0f);
-							/* 
-							FadeManager.Instance.LoadScene ("Stage1", 2.0f);
-							//ステータス上昇
-							int hp = PlayerPrefs.GetInt("hp") + (int)PlayerPrefs.GetInt("uphp")/10;
-							int attack = PlayerPrefs.GetInt("attack") + (int)PlayerPrefs.GetInt("upattack")/10;
-							PlayerPrefs.SetInt("hp",hp);
-							PlayerPrefs.SetInt("attack",attack);
-							*/
+							
+							textWinLose.transform.GetChild(0).gameObject.SetActive(true);
+							textWinLose.transform.GetChild(1).gameObject.SetActive(true);
+							iTween.MoveFrom(textWinLose.transform.GetChild(0).gameObject, iTween.Hash("x",-10));
+							iTween.MoveFrom(textWinLose.transform.GetChild(1).gameObject, iTween.Hash("x",-10));
 						}));
 					}else{
 						

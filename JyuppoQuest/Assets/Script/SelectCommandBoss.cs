@@ -113,8 +113,31 @@ public class SelectCommandBoss : MonoBehaviour {
 	private void Battle(){
 		//行動
 		int hero = PlayerPrefs.GetInt("herocommand");
-		PlayerPrefs.SetInt("enemycommand",UnityEngine.Random.Range(0,1));
+
+		int[] enemycommandarr = new int[]{0,0,1,1,1,2};
+		int enemycommand = enemycommandarr[UnityEngine.Random.Range(0,enemycommandarr.Length)];
+
+		int hissatsuRate = 5;
+		if(UnityEngine.Random.Range(0,hissatsuRate) == 0){
+			switch(hero){
+			case 0:
+				enemycommand = 1;
+				break;
+			case 1:
+				enemycommand = 2;
+				break;
+			case 2:
+				enemycommand = 0;
+				break;
+			}
+		}
+			
+		PlayerPrefs.SetInt("enemycommand",enemycommand);
+
+
 		int enemy = PlayerPrefs.GetInt("enemycommand");
+
+
 
 		int heroAttack = PlayerPrefs.GetInt("attack");
 		int enemyAttack = PlayerPrefs.GetInt("enemyattack");
@@ -132,7 +155,7 @@ public class SelectCommandBoss : MonoBehaviour {
 				"勇者の攻撃！\n"
 				+"敵の攻撃！\n"
 				+"\n"
-				+"お互いダメージを食らった。");
+				+"互いにダメージを与えた。");
 			}else if(enemy == 1){
 				//相手が防御していた時
 				EnemyDefense();
@@ -141,7 +164,7 @@ public class SelectCommandBoss : MonoBehaviour {
 				"勇者の攻撃！\n"
 				+"敵のカウンター！\n"
 				+"\n"
-				+"やばい！\n敵のカウンターを食らってしまった。");
+				+"勢いあまって敵のカウンターを食らった！");
 			}else if(enemy == 2){
 				//相手が回復していた時
 				HeroAttack((int)heroAttack);
@@ -149,7 +172,7 @@ public class SelectCommandBoss : MonoBehaviour {
 				"勇者の攻撃！\n"
 				+"敵の回復魔法！\n"
 				+"\n"
-				+"敵が回復準備をしている間を狙って一方的に攻撃！");
+				+"敵の回復の隙に一方的な攻撃を与えた！");
 			}else if(enemy == 3){
 				//相手が休憩していた時
 				HeroAttack((int)heroAttack);
@@ -157,7 +180,7 @@ public class SelectCommandBoss : MonoBehaviour {
 				"勇者の攻撃！\n"
 				+"敵はボーッとしている。\n"
 				+"\n"
-				+"よし！いいダメージが入った。");
+				+"敵の隙をついてダメージを与えた！");
 			}
 		}else if(hero == 1){
 			//防御
@@ -169,14 +192,14 @@ public class SelectCommandBoss : MonoBehaviour {
 				"勇者のカウンター！\n"
 				+"敵の攻撃！\n"
 				+"\n"
-				+"カウンター成功。\n敵にダメージ与えた！");
+				+"カウンター成功。\n敵の攻撃を利用してダメージを与えた！");
 			}else if(enemy == 1){
 				//相手が防御していた時
 				message.GetComponent<MessageBoss>().SetMessagePanel(
 				"勇者のカウンター！\n"
 				+"敵のカウンター！\n"
 				+"\n"
-				+"お互い身構えている。");
+				+"互いに身構えている。");
 			}else if(enemy == 2){
 				//相手が回復していた時
 				EnemyHeal(enemyAttack);
@@ -185,14 +208,14 @@ public class SelectCommandBoss : MonoBehaviour {
 				"勇者のカウンター！\n"
 				+"敵の回復魔法！\n"
 				+"\n"
-				+"やられた！\n敵の体力が回復してしまった。");
+				+"敵に回復の隙を与えてしまった！");
 			}else if(enemy == 3){
 				//相手が休憩していた時
 				message.GetComponent<MessageBoss>().SetMessagePanel(
 				"勇者のカウンター！\n"
 				+"敵はボーッとしている。\n"
 				+"\n"
-				+"何も起こらない。");
+				+"何もしてこないようだ。");
 			}
 		}else if(hero == 2){
 			//回復
@@ -203,7 +226,7 @@ public class SelectCommandBoss : MonoBehaviour {
 				"勇者の回復魔法！\n"
 				+"敵の攻撃！\n"
 				+"\n"
-				+"ぐっ！\n敵の攻撃を食らってしまった。");
+				+"敵の攻撃を食らってしまった。");
 			}else if(enemy == 1){
 				//相手が防御していた時
 				HeroHeal(heroAttack);
@@ -212,7 +235,7 @@ public class SelectCommandBoss : MonoBehaviour {
 				"勇者の回復魔法！\n"
 				+"敵のカウンター！\n"
 				+"\n"
-				+"決まった！\n体力が回復した。");
+				+"敵が身構えている隙に体力を回復した！");
 			}else if(enemy == 2){
 				//相手が回復していた時
 				HeroHeal(heroAttack);
@@ -221,7 +244,7 @@ public class SelectCommandBoss : MonoBehaviour {
 				"勇者の回復魔法！\n"
 				+"敵の回復魔法！\n"
 				+"\n"
-				+"どちらも体力回復！");
+				+"互いに体の傷を癒した。");
 			}else if(enemy == 3){
 				//相手が休憩していた時
 				HeroHeal(heroAttack);
@@ -230,7 +253,7 @@ public class SelectCommandBoss : MonoBehaviour {
 				"勇者の回復魔法！\n"
 				+"敵はボーッとしている。\n"
 				+"\n"
-				+"よし！回復成功！");
+				+"敵の隙をついて回復に成功した！");
 			}
 		}
 	}

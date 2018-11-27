@@ -35,6 +35,9 @@ public class RemainAudio : MonoBehaviour {
 	public AudioClip healSE;
 	public AudioClip winSE;
 	public AudioClip loseSE;
+	public AudioClip bosswinSE;
+	public AudioClip bossloseSE;
+	public AudioClip downSE;
 
     public void Awake ()
 	{
@@ -127,6 +130,15 @@ public class RemainAudio : MonoBehaviour {
 			break;
 		case "lose":
 			audio[target].PlayOneShot(loseSE,2.0f);
+			break;
+		case "bosswin":
+			audio[target].PlayOneShot(bosswinSE,2.5f);
+			break;
+		case "bosslose":
+			audio[target].PlayOneShot(bossloseSE,0.8f);
+			break;
+		case "down":
+			audio[target].PlayOneShot(downSE);
 			break;
 		default:
 			Debug.Log("そんなSEありません");

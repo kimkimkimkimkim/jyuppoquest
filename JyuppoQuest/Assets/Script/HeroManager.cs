@@ -27,28 +27,28 @@ public class HeroManager : MonoBehaviour {
 		Vector3 targetPos = new Vector3(0,0,0);
 
 		//右
-		if(Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)){
+		if(Input.GetKey(KeyCode.P) && (PlayerPrefs.GetInt("posx") != 8)){
 			isMove = true;
 			PlayerPrefs.SetInt("posx",PlayerPrefs.GetInt("posx") + 2);
 			//回転
 			targetPos = new Vector3(transform.position.x + disMove,transform.position.y, transform.position.z);
 		}
 		//左
-		if(Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)){
+		if(Input.GetKey(KeyCode.L) && (PlayerPrefs.GetInt("posx") != 0)){
 			isMove = true;
 			PlayerPrefs.SetInt("posx",PlayerPrefs.GetInt("posx") - 2);
 			//回転
 			targetPos = new Vector3(transform.position.x - disMove,transform.position.y, transform.position.z);
 		}
 		//上
-		if(Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)){
+		if(Input.GetKey(KeyCode.O) && (PlayerPrefs.GetInt("posz") != 8)){
 			isMove = true;
 			PlayerPrefs.SetInt("posz",PlayerPrefs.GetInt("posz") + 2);
 			//回転
 			targetPos = new Vector3(transform.position.x,transform.position.y, transform.position.z + disMove);
 		}
 		//下
-		if(Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)){
+		if(Input.GetKey(KeyCode.Semicolon) && (PlayerPrefs.GetInt("posz") != 0)){
 			isMove = true;
 			PlayerPrefs.SetInt("posz",PlayerPrefs.GetInt("posz") - 2);
 			//回転

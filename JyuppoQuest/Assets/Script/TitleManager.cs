@@ -6,7 +6,7 @@ public class TitleManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		for(int i=0;i<4;i++){
+		for(int i=0;i<6;i++){
 				for(int j=0;j<5;j++){
 					for(int k=0;k<5;k++){
 						string pos = (i+1).ToString() + j.ToString() + k.ToString();

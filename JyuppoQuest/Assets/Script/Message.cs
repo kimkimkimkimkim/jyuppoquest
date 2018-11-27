@@ -53,7 +53,7 @@ public class Message : MonoBehaviour {
 		clickIcon.enabled = false;
 		messageText = GetComponentInChildren<Text>();
 		messageText.text = "";
-		SetMessage("敵が現れた！\n");
+		SetMessage("敵が現れた！");
 	}
  
 	void Update () {
@@ -148,8 +148,8 @@ public class Message : MonoBehaviour {
 						iTween.MoveFrom(textWinLose, iTween.Hash("x",-10));
 						nowTextNum = 0;
 						isEndMessage = true;
-						SetMessagePanel("戦いに勝利した！\nステータスが上昇したぞ");
-						StartCoroutine(DelayMethod(3.0f, () =>
+						SetMessagePanel("戦いに勝利した！\nステータスが上昇した！");
+						StartCoroutine(DelayMethod(3.5f, () =>
 						{	
 							RemainAudio.Instance.Play();
 							RemainAudio.Instance.ChangeBgm(0);
@@ -173,8 +173,8 @@ public class Message : MonoBehaviour {
 						iTween.MoveFrom(textWinLose, iTween.Hash("x",-10));
 						nowTextNum = 0;
 						isEndMessage = true;
-						SetMessagePanel("負けてしまった...\n少しだけステータスが上昇");
-						StartCoroutine(DelayMethod(3.0f, () =>
+						SetMessagePanel("負けてしまった...\nステータスが少し上昇した！");
+						StartCoroutine(DelayMethod(3.5f, () =>
 						{
 							RemainAudio.Instance.Play();
 							RemainAudio.Instance.ChangeBgm(0);

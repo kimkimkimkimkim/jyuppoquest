@@ -64,40 +64,66 @@ public class HeroCollider : MonoBehaviour {
 
 			string id = col.GetComponent<ItemID>().id;
 			PlayerPrefs.SetInt(id,0);
-
+			
 			Destroy(col.gameObject);
-			int plus = 5;
-			int attack = PlayerPrefs.GetInt("attack") + plus;
+			int plusH = col.GetComponent<ItemStatus>().hp;
+			int plusA = col.GetComponent<ItemStatus>().attack;
+			int attack = PlayerPrefs.GetInt("attack") + plusA;
+			int health = PlayerPrefs.GetInt("hp") + plusH;
 			textAttack.GetComponent<Text>().text = attack.ToString();
+			textHealth.GetComponent<Text>().text = health.ToString();
+
 			PlayerPrefs.SetInt("attack",attack);
+			PlayerPrefs.SetInt("hp",health);
 
 			GameObject textAnim = textAttack.transform.GetChild(0).gameObject;
 			textAnim.SetActive(true);
 			textAnim.GetComponent<Text>().color = Color.red;
-			textAnim.GetComponent<Text>().text = "+" + plus.ToString() + "↑";
+			textAnim.GetComponent<Text>().text = "+" + plusA.ToString() + "↑";
+
+			GameObject textAnimH = textHealth.transform.GetChild(0).gameObject;
+			textAnimH.SetActive(true);
+			textAnimH.GetComponent<Text>().color = Color.red;
+			textAnimH.GetComponent<Text>().text = "+" + plusH.ToString() + "↑";
 			StartCoroutine(DelayMethod(1.5f, () =>
 			{
 				textAnim.SetActive(false);
+				textAnimH.SetActive(false);
 			}));
 		}
 		if(col.CompareTag("ItemBlue")){
+
+			RemainAudio.Instance.PlaySE("down");
 
 			string id = col.GetComponent<ItemID>().id;
 			PlayerPrefs.SetInt(id,0);
 			
 			Destroy(col.gameObject);
-			int plus = 5;
-			int attack = PlayerPrefs.GetInt("attack") - plus;
+			int plusH = col.GetComponent<ItemStatus>().hp;
+			int plusA = col.GetComponent<ItemStatus>().attack;
+			int attack = PlayerPrefs.GetInt("attack") - plusA;
+			int health = PlayerPrefs.GetInt("hp") - plusH;
+			if(attack < 0)attack = 0;
+			if(health < 0)health = 0;
 			textAttack.GetComponent<Text>().text = attack.ToString();
+			textHealth.GetComponent<Text>().text = health.ToString();
+
 			PlayerPrefs.SetInt("attack",attack);
+			PlayerPrefs.SetInt("hp",health);
 
 			GameObject textAnim = textAttack.transform.GetChild(0).gameObject;
 			textAnim.SetActive(true);
 			textAnim.GetComponent<Text>().color = Color.blue;
-			textAnim.GetComponent<Text>().text = "-" + plus.ToString() + "↓";
+			textAnim.GetComponent<Text>().text = "-" + plusA.ToString() + "↓";
+
+			GameObject textAnimH = textHealth.transform.GetChild(0).gameObject;
+			textAnimH.SetActive(true);
+			textAnimH.GetComponent<Text>().color = Color.blue;
+			textAnimH.GetComponent<Text>().text = "-" + plusH.ToString() + "↓";
 			StartCoroutine(DelayMethod(1.5f, () =>
 			{
 				textAnim.SetActive(false);
+				textAnimH.SetActive(false);
 			}));
 		}
 
